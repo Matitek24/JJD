@@ -1,4 +1,24 @@
-package PACKAGE_NAME;
+public class SFolder implements Folder{
+    private String name;
+    private String size;
 
-public class SFolder {
+    public SFolder(String name, String size){
+        this.name = name;
+        this.size = size;
+    }
+
+    @Override
+    public String getName() {
+        return name;
+    }
+
+    @Override
+    public String getSize() {
+        return size;
+    }
+
+    @Override
+    public String toString() {
+        return "Name " + name + " " + size;
+    }
 }

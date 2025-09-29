@@ -1,4 +1,4 @@
-package PACKAGE_NAME;
-
-public class Folder {
+interface Folder {
+    String getName();
+    String getSize();
 }
