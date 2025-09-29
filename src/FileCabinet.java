@@ -22,22 +22,54 @@ public class FileCabinet implements Cabinet {
         folders.addAll(fold);
     }
 
+    public Optional<Folder> getFolderRecursive(String name, List<Folder> listOfFolders) {
+        for (Folder folder : listOfFolders) {
+          if(folder.getName().equals(name)) {return Optional.of(folder);}
+          if(folder instanceof MultiFolder mf){
+              Optional<Folder> fol = getFolderRecursive(name, mf.getFolders());
+              if(fol.isPresent()){
+                  return fol;
+              }
+          }
+        }
+        return Optional.empty();
+    }
+
     @Override
     public Optional<Folder> findFolderByName(String name) {
-        return folders.stream()
-                .filter(folder -> folder.getName().equals(name))
-                .findFirst();
+        return getFolderRecursive(name, folders);
+    }
+
+    public List<Folder> findFolderBySizeRecursive(String size, List<Folder> listOfFolders) {
+        List<Folder> foldersFind = new ArrayList<>();
+        for(Folder folder : listOfFolders) {
+            if(folder.getSize().equals(size)) {
+                foldersFind.add(folder);
+            }
+            if(folder instanceof MultiFolder mf){
+                foldersFind.addAll(findFolderBySizeRecursive(mf.getSize(), mf.getFolders()));
+            }
+        }
+        return foldersFind;
     }
 
     @Override
     public List<Folder> findFoldersBySize(String size) {
-        return folders.stream()
-                .filter(folder_size -> folder_size.getSize().equals(size))
-                .toList();
+       return findFolderBySizeRecursive(size, folders);
     }
 
+    public int countRecursive(List <Folder> listOfFolders) {
+        int wynik = 0;
+        for(Folder folder : listOfFolders) {
+            wynik ++;
+            if(folder instanceof MultiFolder mf){
+                wynik += countRecursive(mf.getFolders());
+            }
+        }
+        return wynik;
+    }
     @Override
     public int count() {
-        return folders.size();
+        return countRecursive(folders);
     }
 }
