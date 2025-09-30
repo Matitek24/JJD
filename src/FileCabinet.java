@@ -15,13 +15,16 @@ import java.util.stream.IntStream;
 public class FileCabinet implements Cabinet {
     private List<Folder> folders = new ArrayList<>();
 
+    // konstrkutor do wrzucenia jednego foldera
     public FileCabinet(Folder folder) {
         folders.add(folder);
     }
+    // konstruktor gdzie mozena wrzucac listy folderow
     public FileCabinet(List<Folder> fold) {
         folders.addAll(fold);
     }
 
+    // rekurecyjna funkcja pomocnicza do sprawdzania folderów oraz podfolderów po nazwach
     public Optional<Folder> getFolderRecursive(String name, List<Folder> listOfFolders) {
         for (Folder folder : listOfFolders) {
           if(folder.getName().equals(name)) {return Optional.of(folder);}
@@ -40,6 +43,7 @@ public class FileCabinet implements Cabinet {
         return getFolderRecursive(name, folders);
     }
 
+    // rekurecyjna funckja do sprawdzania folderow po rozmiarze
     public List<Folder> findFolderBySizeRecursive(String size, List<Folder> listOfFolders) {
         List<Folder> foldersFind = new ArrayList<>();
         for(Folder folder : listOfFolders) {
@@ -58,6 +62,7 @@ public class FileCabinet implements Cabinet {
        return findFolderBySizeRecursive(size, folders);
     }
 
+    // liczenie folderow po calym drzewie
     public int countRecursive(List <Folder> listOfFolders) {
         int wynik = 0;
         for(Folder folder : listOfFolders) {
