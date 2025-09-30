@@ -1,8 +1,8 @@
-public class SFolder implements Folder{
+public class SimpleFolder implements Folder{
     private String name;
     private String size;
 
-    public SFolder(String name, String size){
+    public SimpleFolder(String name, String size){
         this.name = name;
         this.size = size;
     }

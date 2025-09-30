@@ -4,10 +4,10 @@ public static void main(String[] args) {
     List<String> names = List.of("FolderA", "FolderB", "FolderC", "FolderD", "FolderE");
 
     List<Folder> folderList = IntStream.range(0, sizes.size())
-            .mapToObj(i -> new SFolder(names.get(i), sizes.get(i)))
+            .mapToObj(i -> new SimpleFolder(names.get(i), sizes.get(i)))
             .collect(Collectors.toList());
 
-    Folder ExtraFolder = new MultiSFolder("FolderExtra", "160M", folderList);
+    Folder ExtraFolder = new CompositeFolder("FolderExtra", "160M", folderList);
 
     folders.add(ExtraFolder);
     folders.addAll(folderList);
